@@ -1,0 +1,152 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+header h1 {
+  margin: 0;
+}
+main {
+  padding: 1rem;
+}
+section {
+  background-color: white;
+  padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+footer {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+#note-form {
+  display: flex;
+  flex-direction: column;
+}
+input[type="text"], textarea {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+search-input {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #45a049;
+}
+/*message */
+error-message {
+  color: red;
+  min-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+/*Notes list and cards */
+#notes-list {
+    list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.note-card {
+  background-color: #fff;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(33.333% - 1rem);
+}
+.note-card note-text {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+.note metadata {
+  font-size: 0.8rem;
+  color: #d7118b;
+  gap: 4px;
+  align-items: center;
+  display: flex;
+}
+.note label {
+  font-weight: bold;
+  margin-right: 4px;
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+.delete-button:hover {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  margin-top: 2rem;
+  font-style: italic;
+}
+/*category style */
+.category-personal {
+  background-color: #e0f7fa;
+  color: #00796b;
+  border-left: 4px solid #00796b;
+}
+.category-work {
+  background-color: #fff3e0;
+  color: #f57c00;
+  border-left: 4px solid #f57c00;
+}
+.category-todo {
+  background-color: #f1f8e9;
+  color: #388e3c;
+  border-left: 4px solid #388e3c;
+}
+/*small screen */
+@media (max-width: 768px) {
+  .note-card {
+    width: calc(50% - 1rem);
+    align-items: center;
+  }
+}
+header h1 {
+  font-size: 1.5rem;
+}
