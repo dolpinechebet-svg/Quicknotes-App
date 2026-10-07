@@ -1,152 +1,165 @@
 * {
   box-sizing: border-box;
 }
+
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  background-color: #f0f2f5;
+  color: #222;
 }
+
 header {
-  background-color: #043406;
+  background-color: #2c3e50;
   color: white;
-  padding: 1rem;
   text-align: center;
+  padding: 28px 16px;
 }
+
 header h1 {
   margin: 0;
+  font-size: 2.2rem;
 }
+
+header p {
+  margin: 6px 0 0;
+}
+
 main {
-  padding: 1rem;
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 0 16px;
 }
+
 section {
   background-color: white;
-  padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 footer {
-  background-color: #053107;
-  color: white;
   text-align: center;
-  padding: 1rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  padding: 16px;
+  color: #555;
 }
-#note-form {
+
+/* Form with Flexbox */
+form {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
-input[type="text"], textarea {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+
+#note-input {
+  flex: 1;
+}
+
+input,
+select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #999;
   border-radius: 4px;
 }
-search-input {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+
+#search-input {
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
+
 button {
-  background-color: #4CAF50;
+  background-color: #3498db;
   color: white;
   border: none;
-  padding: 0.5rem;
-  cursor: pointer;
+  padding: 10px 16px;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
+
 button:hover {
-  background-color: #45a049;
+  background-color: #2c3e50;
 }
-/*message */
-error-message {
+
+/* Messages */
+#error-message {
   color: red;
-  min-height: 1.5rem;
-  margin-bottom: 1rem;
+  min-height: 1.5em;
+  margin: 10px 0 0;
 }
-/*Notes list and cards */
+
+/* Notes list and cards */
 #notes-list {
-    list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.note-card {
-  background-color: #fff;
+
+.note {
   padding: 12px 16px;
   margin-bottom: 12px;
-  border-radius: 8px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(33.333% - 1rem);
+  border-radius: 8px;
+  background-color: #fafafa;
 }
-.note-card note-text {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1rem;
+
+.note-text {
+  margin: 0 0 8px;
+  word-wrap: break-word;
 }
-.note metadata {
-  font-size: 0.8rem;
-  color: #d7118b;
-  gap: 4px;
-  align-items: center;
+
+.note-meta {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: #555;
 }
-.note label {
+
+.note-label {
   font-weight: bold;
-  margin-right: 4px;
-  background-color: #f0f0f0;
-  padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 0.75rem;
 }
-.delete-button:hover {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 0.75rem;
+
+.delete-btn {
+  margin-left: auto;
+  background-color: #c0392b;
+  padding: 6px 12px;
+  font-size: 0.85rem;
 }
+
+.delete-btn:hover {
+  background-color: #7b241c;
+}
+
 .empty-message {
-  text-align: center;
-  color: #888;
-  font-size: 1rem;
-  margin-top: 2rem;
+  color: #555;
   font-style: italic;
 }
-/*category style */
+
+/* Category styles */
 .category-personal {
-  background-color: #e0f7fa;
-  color: #00796b;
-  border-left: 4px solid #00796b;
+  border-left: 6px solid teal;
 }
+
 .category-work {
-  background-color: #fff3e0;
-  color: #f57c00;
-  border-left: 4px solid #f57c00;
+  border-left: 6px solid darkred;
 }
-.category-todo {
-  background-color: #f1f8e9;
-  color: #388e3c;
-  border-left: 4px solid #388e3c;
+
+.category-study {
+  border-left: 6px solid #2980b9;
 }
-/*small screen */
-@media (max-width: 768px) {
-  .note-card {
-    width: calc(50% - 1rem);
-    align-items: center;
+
+/* Small screens */
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+    align-items: stretch;
   }
-}
-header h1 {
-  font-size: 1.5rem;
+
+  header h1 {
+    font-size: 1.6rem;
+  }
 }
