@@ -1,96 +1,130 @@
-const form = document.getElementById('note-form');
-const noteInput = document.getElementById('note-input');
-const categorySelect = document.getElementById('category-select');
-const notesList = document.getElementById('notes-list');
+const form = document.querySelector("#note-form");
+const noteInput = document.querySelector("#note-input");
+const categorySelect = document.querySelector("#note-category");
+const searchInput = document.querySelector("#search-input");
+const notesList = document.querySelector("#notes-list");
+const noteCount = document.querySelector("#note-count");
+const errorMessage = document.querySelector("#error-message");
 
-const notes = [];
+const STORAGE_KEY = "quicknotes";
 
-function renderNotes() {
-  notesList.textContent = '';
+function loadNotes() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved === null) {
+    return [];
+  }
+  try {
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
 
-  notes.forEach((note, index) => {
-    const noteItem = document.createElement('li');
-    noteItem.className = 'note-item';
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
 
-    const noteContent = document.createElement('div');
-    noteContent.className = 'note-content';
+let notes = loadNotes();
 
-    const noteText = document.createElement('span');
-    noteText.textContent = note.text;
+function updateCount() {
+  if (notes.length === 0) {
+    noteCount.textContent = "You have no notes yet.";
+  } else if (notes.length === 1) {
+    noteCount.textContent = "You have 1 note.";
+  } else {
+    noteCount.textContent = "You have " + notes.length + " notes.";
+  }
+}
 
-    const noteCategory = document.createElement('span');
-    noteCategory.className = 'note-category';
-    noteCategory.textContent = note.category;
+function deleteNote(id) {
+  notes = notes.filter(function (note) {
+    return note.id !== id;
+  });
+  saveNotes();
+  render();
+}
 
-    noteContent.appendChild(noteText);
-    noteContent.appendChild(noteCategory);
-    noteItem.appendChild(noteContent);
+function render() {
+  const term = searchInput.value.trim().toLowerCase();
+  const visibleNotes = notes.filter(function (note) {
+    return note.text.toLowerCase().includes(term);
+  });
 
-    const importantLabel = document.createElement('label');
-    importantLabel.className = 'important-label';
-    importantLabel.textContent = 'Mark as Important';
+  notesList.textContent = "";
+  updateCount();
 
-    const importantCheckbox = document.createElement('input');
-    importantCheckbox.type = 'checkbox';
-    importantCheckbox.checked = Boolean(note.important);
-    importantCheckbox.addEventListener('change', function () {
-      note.important = importantCheckbox.checked;
+  if (notes.length > 0 && visibleNotes.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "empty-message";
+    empty.textContent = "No notes match your search.";
+    notesList.appendChild(empty);
+    return;
+  }
+
+  visibleNotes.forEach(function (note) {
+    const li = document.createElement("li");
+    li.className = "note category-" + note.category;
+
+    const text = document.createElement("p");
+    text.className = "note-text";
+    text.textContent = note.text;
+
+    const label = document.createElement("span");
+    label.className = "note-label";
+    label.textContent = note.category.charAt(0).toUpperCase() + note.category.slice(1);
+
+    const date = document.createElement("span");
+    date.className = "note-date";
+    date.textContent = note.createdAt;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", function () {
+      deleteNote(note.id);
     });
 
-    importantLabel.appendChild(importantCheckbox);
-    noteItem.appendChild(importantLabel);
+    const meta = document.createElement("div");
+    meta.className = "note-meta";
+    meta.append(label, date, deleteBtn);
 
-    const deleteButton = document.createElement('button');
-    deleteButton.className = 'delete-button';
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function () {
-      notes.splice(index, 1);
-      renderNotes();
-    });
-    noteItem.appendChild(deleteButton);
-
-    notesList.appendChild(noteItem);
+    li.append(text, meta);
+    notesList.appendChild(li);
   });
 }
 
-form.addEventListener('submit', function (event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
 
   const text = noteInput.value.trim();
-  if (!text) {
+
+  if (text === "") {
+    errorMessage.textContent = "Please type a note first.";
     return;
   }
+  if (text.length > 200) {
+    errorMessage.textContent = "Notes must be 200 characters or fewer.";
+    return;
+  }
+
+  errorMessage.textContent = "";
 
   const note = {
     id: Date.now(),
-    text,
+    text: text,
     category: categorySelect.value,
     createdAt: new Date().toLocaleString(),
-    important: false
   };
 
   notes.unshift(note);
-  noteInput.value = '';
-  renderNotes();
+  saveNotes();
+  noteInput.value = "";
+  searchInput.value = "";
+  render();
 });
 
-renderNotes();
-const clearAllBtn = document.querySelector("#clear-all-btn");
+searchInput.addEventListener("input", render);
 
-clearAllBtn.addEventListener("click", function () {
-  if (notes.length === 0) {
-    return;
-  }
-  if (confirm("Delete all notes?")) {
-    notes = [];
-    saveNotes();
-    render();
-  }
-});
-
-
-
-
-
-
-
+render();
