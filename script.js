@@ -75,6 +75,20 @@ form.addEventListener('submit', function (event) {
 });
 
 renderNotes();
+const clearAllBtn = document.querySelector("#clear-all-btn");
+
+clearAllBtn.addEventListener("click", function () {
+  if (notes.length === 0) {
+    return;
+  }
+  if (confirm("Delete all notes?")) {
+    notes = [];
+    saveNotes();
+    render();
+  }
+});
+
+
 
 
 
